@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SolarAI Analytics · Performance analysis for solar farms</title>
+<meta name="description" content="Performance analysis for utility-scale solar farms. From your SCADA exports we find where the plant loses energy, why, and what each loss was worth at AEMO market prices, with a written report and a dashboard to explore.">
+<meta name="theme-color" content="#05070e">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g' cx='38%25' cy='30%25' r='75%25'%3E%3Cstop offset='0' stop-color='%23ffe2a8'/%3E%3Cstop offset='.5' stop-color='%23ffb547'/%3E%3Cstop offset='1' stop-color='%23ff7a3d'/%3E%3C/radialGradient%3E%3CclipPath id='c'%3E%3Ccircle cx='32' cy='32' r='29'/%3E%3C/clipPath%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='29' fill='url(%23g)'/%3E%3Cg clip-path='url(%23c)' fill='%230b1220'%3E%3Crect x='16' y='36' width='8' height='30' rx='2'/%3E%3Crect x='28' y='27' width='8' height='40' rx='2'/%3E%3Crect x='40' y='18' width='8' height='50' rx='2'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/landing.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><radialGradient id="hs" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#ffe2a8"/><stop offset=".5" stop-color="#ffb547"/><stop offset="1" stop-color="#ff7a3d"/></radialGradient><clipPath id="sdisc"><circle cx="32" cy="32" r="29"/></clipPath></defs>
+  <symbol id="mark" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="url(#hs)"/><g clip-path="url(#sdisc)" fill="#0b1220"><rect x="16" y="36" width="8" height="30" rx="2"/><rect x="28" y="27" width="8" height="40" rx="2"/><rect x="40" y="18" width="8" height="50" rx="2"/></g></symbol>
+  <symbol id="arrow" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top"><svg width="28" height="28" aria-hidden="true"><use href="#mark"/></svg>SolarAI<small>Analytics</small></a>
+    <ul>
+      <li><a href="#questions" data-i18n="nav1">The analysis</a></li>
+      <li><a href="#helios" data-i18n="nav6">HeliOS</a></li>
+      <li><a href="#market" data-i18n="nav2">Market value</a></li>
+      <li><a href="#deliverables" data-i18n="nav3">What you get</a></li>
+      <li><a href="#faq" data-i18n="nav5">FAQ</a></li>
+    </ul>
+    <div class="right">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="es" aria-pressed="false">ES</button>
+      </div>
+      <a class="btn primary sm cta-nav" href="#contact" data-i18n="navCta">Request an analysis</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap grid">
+      <div>
+        <h1 data-i18n-html="h1">Your solar farm is losing energy. We show you where, why, and <em>what it is really worth</em>.</h1>
+        <p class="lede" data-i18n="lede">We take your plant's SCADA exports, build a model of what every block should produce, and account for every lost megawatt-hour: which equipment, which day, which cause, and what it cost at the market price of that five-minute interval.</p>
+        <div class="ctas">
+          <a class="btn primary" href="#contact"><span data-i18n="cta1">Request an analysis</span><svg width="16" height="16" aria-hidden="true"><use href="#arrow"/></svg></a>
+          <a class="btn ghost" href="../helios/" data-i18n="cta2">Discover HeliOS</a>
+        </div>
+      </div>
+
+      <figure class="sheet" style="margin:0" aria-labelledby="hero-cap">
+        <div class="sheet-head"><b id="hero-cap" data-i18n="heroT">Demo plant · daily energy</b><span data-i18n="heroP">12 Jan – 10 Feb</span></div>
+        <ul class="legend">
+          <li><i style="background:var(--exp);box-shadow:inset 0 0 0 1px var(--exp-line)"></i><span data-i18n="lgExp">Expected (healthy plant, same weather)</span></li>
+          <li><i style="background:var(--act)"></i><span data-i18n="lgAct">Exported</span></li>
+        </ul>
+        <div class="chart" id="c-daily" role="img" aria-label="Daily expected versus exported energy for 30 days; the largest gaps are on 21 and 31 January and 1 and 4 February."></div>
+        <div class="sheet-foot">
+          <div><b class="num"><span data-n="1252">1,252</span> <small style="font-size:.6em;color:var(--ink-3)">MWh</small></b><span data-i18n="hf1">lost in 28 days of data</span></div>
+          <div><b class="num"><span data-n="12.4" data-d="1">12.4</span> %</b><span data-i18n="hf2">of the energy it should have made</span></div>
+          <div><b class="num" data-i18n="hf3v">19.0k AUD</b><span data-i18n="hf3">at AEMO market prices</span></div>
+        </div>
+      </figure>
+    </div>
+  </header>
+
+  <!-- PREGUNTAS -->
+  <section id="questions">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker" data-i18n="qK">The analysis</p>
+          <h2 data-i18n="qH">Three questions, answered from your own data.</h2>
+        </div>
+      </div>
+      <ol class="qs">
+        <li><span class="tag" data-i18n="q1t">Plant model</span><h3 data-i18n="q1h">How much should the plant have made?</h3><p data-i18n="q1p">A physical model calibrated on your healthiest blocks, fed with the irradiance, temperature and rear-side light each block actually saw.</p></li>
+        <li><span class="tag" data-i18n="q2t">Losses</span><h3 data-i18n="q2h">Where did the missing energy go?</h3><p data-i18n="q2p">A waterfall from expected to exported energy: outages, curtailment, inverters, DC buses, trackers, clipping and the unexplained rest.</p></li>
+        <li><span class="tag" data-i18n="q3t">Faults &amp; events</span><h3 data-i18n="q3h">What happened, when, and to which equipment?</h3><p data-i18n="q3p">Every episode found automatically, with start, duration, energy lost and its value, down to a single DC bus or tracker.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- HELIOS: el producto de SolarAI (página propia en ../helios/) -->
+  <section id="helios" class="twin">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker" data-i18n="tK">Our product · HeliOS</p>
+          <h2 data-i18n-html="tH">From analysis to daily operations: <em>HeliOS</em>.</h2>
+        </div>
+        <p class="lede" data-i18n="tL">HeliOS is our O&amp;M platform for solar farms: the plant in 3D replayed from SCADA, work orders, inventory and warranties, a mobile app for technicians and Apollo, an AI assistant that knows every tracker.</p>
+      </div>
+      <figure class="stage" style="margin:0">
+        <a href="../helios/" style="display:block;border-radius:inherit;overflow:hidden"><img src="assets/helios-ops.jpg" alt="HeliOS: the plant in 3D with irradiance, temperature and work-order pins" loading="lazy" style="display:block;width:100%;height:auto"></a>
+      </figure>
+      <div class="ctas"><a class="btn ghost" href="../helios/" data-i18n="tOpen">Discover HeliOS</a></div>
+    </div>
+  </section>
+
+  <!-- HALLAZGO DE MERCADO -->
+  <section id="market" class="band">
+    <div class="wrap finding">
+      <div>
+        <p class="kicker" data-i18n="mK">Why market value matters</p>
+        <h2 data-i18n-html="mH">Not every lost megawatt-hour <em>costs the same</em>.</h2>
+        <p class="lede" data-i18n="mL">In the demo period, 43 % of the lost energy fell in intervals when the market paid nothing for it. Pricing every MWh at a flat tariff would have overstated the damage more than four times, and sent the maintenance team after the wrong problem.</p>
+        <div class="compare">
+          <div><span data-i18n="cmp1t">At a flat 70 AUD/MWh</span><b class="num" data-i18n="cmp1v">87.6k AUD</b><small data-i18n="cmp1s">every lost MWh treated the same</small></div>
+          <div class="hl"><span data-i18n="cmp2t">At AEMO 5-minute prices</span><b class="num" data-i18n="cmp2v">19.0k AUD</b><small data-i18n="cmp2s">spot price + LGC, floored at zero</small></div>
+        </div>
+      </div>
+      <figure class="sheet bands-sheet" style="margin:0">
+        <div class="sheet-head"><b data-i18n="bT">Lost energy and its value, by market price</b><span data-i18n="bU">share of total</span></div>
+        <ul class="legend" id="bands-legend"></ul>
+        <div class="chart" id="c-bands" role="img" aria-label="Lost energy by price band: 43 % at negative value, 45 % between 0 and 50, 8 % between 50 and 100, 4 % above 100 AUD per MWh. Value: 0 %, 38 %, 31 %, 31 %."></div>
+        <p class="read" data-i18n-html="bRead"><strong>How to read it:</strong> 43 % of the lost energy fell at negative prices and was worth nothing, while 4 % of it, lost when prices were above 100 AUD/MWh, carried 31 % of the value. Two of the plant outages happened at around −45 AUD/MWh: the plant most likely stopped on price, not on a fault.</p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ENTREGABLES -->
+  <section id="deliverables">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker" data-i18n="dK">What you get</p>
+          <h2 data-i18n="dH">A report for the board, a dashboard for the team.</h2>
+        </div>
+        <p class="lede" data-i18n="dL">Both come from the same analysis and show the same numbers, so the conversation with your O&amp;M contractor starts from facts everyone can check.</p>
+      </div>
+      <div class="deliv">
+        <article>
+          <div class="shot report" aria-hidden="true">
+            <div class="page"><div class="band-top"></div><i class="a"></i><i class="s"></i><i></i><i class="s"></i><i></i></div>
+            <div class="page"><i class="a"></i><div class="bars"><span style="height:80%"></span><span style="height:55%"></span><span style="height:92%"></span><span style="height:40%"></span><span style="height:70%"></span></div><i></i><i class="s"></i></div>
+            <div class="page"><i class="a"></i><i></i><i class="s"></i><i></i><i class="s"></i><i></i><i class="s"></i></div>
+          </div>
+          <div class="body">
+            <span class="tagline" data-i18n="r1t">Written report · PDF</span>
+            <h3 data-i18n="r1h">The findings, ranked by what they are worth.</h3>
+            <p data-i18n="r1p">Eight pages with your logo on the cover: headline figures, recommended actions in priority order, the energy model, losses and their market value, deviations, equipment and the 30-year forecast. Reviewed with you by our analyst.</p>
+            <div class="links"><a class="btn ghost sm" href="#contact" data-i18n="r1a">Ask for a sample report</a></div>
+          </div>
+        </article>
+        <article>
+          <div class="shot"><img src="assets/helios-analysis.jpg" alt="HeliOS analysis view: inverters, DC buses and trackers compared with the plant median" loading="lazy"></div>
+          <div class="body">
+            <span class="tagline" data-i18n="r2t">Dashboard in HeliOS</span>
+            <h3 data-i18n="r2h">Every view of the analysis, to explore.</h3>
+            <p data-i18n="r2p">Overview, losses and cost, deviations, events, trackers and DC, weather stations and long-term forecast, with a switch between market value and your tariff.</p>
+            <div class="links"><a class="btn ghost sm" href="../helios/#tour" data-i18n="r2a">See HeliOS</a></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÉTODO -->
+  <section id="method" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker" data-i18n="sK">Method</p>
+          <h2 data-i18n="sH">From your SCADA export to a ranked list of actions.</h2>
+        </div>
+        <p class="lede" data-i18n="sL">No hardware and no software to install. We work from the exports your SCADA already produces.</p>
+      </div>
+      <ol class="steps">
+        <li><h3 data-i18n="s1h">You share the data</h3><p data-i18n="s1p">SCADA exports, the plant layout and, if you have it, the design energy simulation. A secure folder is enough.</p></li>
+        <li><h3 data-i18n="s2h">We clean and check it</h3><p data-i18n="s2p">Bad and frozen readings out, weather stations cross-checked against each other, gaps flagged rather than filled.</p></li>
+        <li><h3 data-i18n="s3h">We model and price</h3><p data-i18n="s3p">The plant modelled block by block, every loss located and explained, and each one valued at market prices or your tariff.</p></li>
+        <li><h3 data-i18n="s4h">We walk you through it</h3><p data-i18n="s4p">The report and dashboard delivered, and a review session with our analyst to agree the first actions.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap faq">
+      <div>
+        <p class="kicker" data-i18n="fK">Questions</p>
+        <h2 data-i18n="fH">Before you send us any data.</h2>
+      </div>
+      <div>
+        <details><summary data-i18n="f1q">Do we need to install anything?</summary><p data-i18n="f1a">No. We work from the exports your SCADA system already produces. Nothing connects to your plant's network.</p></details>
+        <details><summary data-i18n="f2q">How much data do you need?</summary><p data-i18n="f2a">One month of five-minute data is enough for a first diagnostic. A full year lets us separate seasonal effects and calibrate the long-term forecast with more confidence.</p></details>
+        <details><summary data-i18n="f4q">What happens to our data?</summary><p data-i18n="f4a">It is used only for your analysis and is never published. Any figure we show outside your company, like the demo on this page, comes from a fictitious plant with data we generated.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <div>
+          <p class="kicker" data-i18n="cK">Contact</p>
+          <h2 data-i18n="cH">Tell us about your plant.</h2>
+          <p class="lede" data-i18n="cL">Tell us what you would like to understand and we will propose the right analysis. We reply within two business days.</p>
+          <p class="mail"><span data-i18n="cM">Or write to us directly</span><b>hello@solarai.com.au</b></p>
+        </div>
+        <!-- Las solicitudes llegan a hello@solarai.com.au vía FormSubmit (la primera dispara un correo de activación) -->
+        <form id="enquiry" novalidate data-endpoint="https://formsubmit.co/ajax/hello@solarai.com.au">
+          <input type="hidden" name="_subject" value="New SolarAI Analytics enquiry (analysis service)">
+          <input type="hidden" name="_template" value="table">
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+          <div class="row">
+            <label for="f-name"><span data-i18n="fName">Name</span><input id="f-name" name="name" autocomplete="name" required></label>
+            <label for="f-company"><span data-i18n="fCompany">Company</span><input id="f-company" name="company" autocomplete="organization" required></label>
+          </div>
+          <label for="f-email"><span data-i18n="fEmail">Work email</span><input id="f-email" name="email" type="email" autocomplete="email" required></label>
+          <div class="row">
+            <label for="f-size"><span data-i18n="fSize">Plant capacity</span>
+              <select id="f-size" name="capacity">
+                <option value="Under 50 MW" data-i18n="o1">Under 50 MW</option>
+                <option value="50-150 MW" selected>50–150 MW</option>
+                <option value="150-300 MW">150–300 MW</option>
+                <option value="Over 300 MW" data-i18n="o4">Over 300 MW</option>
+                <option value="Portfolio" data-i18n="o5">Portfolio of plants</option>
+              </select></label>
+            <label for="f-type"><span data-i18n="fType">Interest</span>
+              <select id="f-type" name="interest">
+                <option value="Diagnostic" data-i18n="t1">Performance diagnostic</option>
+                <option value="Monthly" data-i18n="t2">Monthly analysis</option>
+                <option value="Not sure" data-i18n="t3">Not sure yet</option>
+              </select></label>
+          </div>
+          <label for="f-msg"><span data-i18n="fMsg">What would you like to understand?</span><textarea id="f-msg" name="message" data-i18n-ph="fMsgPh" placeholder="For example: why our PR dropped, what curtailment is costing us, or how our trackers perform"></textarea></label>
+          <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+            <button class="btn primary" type="submit" data-i18n="fSend">Send enquiry</button>
+            <span class="form-msg" id="f-out" role="status" aria-live="polite"></span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top"><svg width="24" height="24" aria-hidden="true"><use href="#mark"/></svg>SolarAI<small>Analytics</small></a>
+    <span data-i18n="foot">© 2026 SolarAI Analytics. Demo figures come from a fictitious plant.</span>
+  </div>
+</footer>
+
+<div class="tip" id="tip" role="tooltip"></div>
+<script src="assets/landing.js"></script>
+</body>
+</html>

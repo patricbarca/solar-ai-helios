@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HeliOS · SolarAI Analytics</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="HeliOS by SolarAI Analytics: the CMMS for solar farms, with a 3D digital twin replayed from SCADA and Apollo, an AI agent.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' role='img' aria-label='HeliOS'%3E%3Ctitle%3EHeliOS%3C/title%3E%3Cdefs%3E%3CradialGradient id='helios-sun' cx='38%25' cy='30%25' r='75%25'%3E%3Cstop offset='0' stop-color='%23ffe2a8'/%3E%3Cstop offset='.5' stop-color='%23ffb547'/%3E%3Cstop offset='1' stop-color='%23ff7a3d'/%3E%3C/radialGradient%3E%3CclipPath id='helios-disc'%3E%3Ccircle cx='32' cy='32' r='29'/%3E%3C/clipPath%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='29' fill='url%28%23helios-sun%29'/%3E%3Cpath clip-path='url%28%23helios-disc%29' d='M0 41 H14 C22 41 23 20 32 20 C41 20 42 41 50 41 H64' fill='none' stroke='%230b1220' stroke-width='4.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<div class="sky" aria-hidden="true"><div class="orb sun"></div><div class="orb cyan"></div><div class="orb violet"></div><div class="grain"></div></div>
+
+<!-- Logo de HeliOS: el sol con la curva de producción de un día grabada dentro. Se reutiliza con <use> -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="hs" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#ffe2a8"/><stop offset=".5" stop-color="#ffb547"/><stop offset="1" stop-color="#ff7a3d"/></radialGradient>
+    <clipPath id="hdisc"><circle cx="32" cy="32" r="29"/></clipPath>
+    <symbol id="logo" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="29" fill="url(#hs)"/>
+      <path clip-path="url(#hdisc)" d="M0 41 H14 C22 41 23 20 32 20 C41 20 42 41 50 41 H64" fill="none" stroke="#0b1220" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- Marca de SolarAI Analytics: el disco solar con tres barras de datos -->
+    <clipPath id="sdisc"><circle cx="32" cy="32" r="29"/></clipPath>
+    <symbol id="sai" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="29" fill="url(#hs)"/>
+      <g clip-path="url(#sdisc)" fill="#0b1220"><rect x="16" y="36" width="8" height="30" rx="2"/><rect x="28" y="27" width="8" height="40" rx="2"/><rect x="40" y="18" width="8" height="50" rx="2"/></g>
+    </symbol>
+  </defs>
+</svg>
+
+<nav class="nav wrap" aria-label="Main">
+  <div class="bar glass">
+    <a class="brand" href="../solar-ai/"><svg width="30" height="30" aria-hidden="true"><use href="#sai"/></svg><span>SolarAI<small>Analytics</small></span></a>
+    <ul>
+      <li><a href="../solar-ai/">Services</a></li>
+      <li><a href="../solar-ai/#helios">Products</a></li>
+      <li><a href="./" aria-current="page">HeliOS</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="btn solar sm" href="#contact">Talk to us</a>
+  </div>
+</nav>
+
+<main id="top">
+  <!-- Barra de producto: solo mueve dentro de esta página -->
+  <div class="wrap">
+    <nav class="subnav glass" aria-label="HeliOS">
+      <span class="sub-brand"><svg width="22" height="22" aria-hidden="true"><use href="#logo"/></svg><span>Heli<em>OS</em></span></span>
+      <a href="#tour">Tour</a><a href="#field">In the field</a><a href="#ai">AI</a><a href="#security">Security</a>
+      <a class="btn solar sm" href="#contact">Book a demo</a>
+    </nav>
+  </div>
+
+  <!-- HERO -->
+  <header class="wrap hero">
+    <div class="hero-copy">
+      <span class="chip glass"><b>New</b> HeliOS, the CMMS by SolarAI Analytics</span>
+      <h1>The operating system for your <span class="sun-text">solar farm</span>.</h1>
+      <p class="lede">Your plant in 3D, replayed from your SCADA. Alarms turned into work orders. And Apollo, an AI agent that knows every tracker and does the paperwork. All on one screen.</p>
+      <div class="ctas">
+        <a class="btn solar" href="#contact">Book a demo
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="btn clear" href="#tour">Take the tour</a>
+      </div>
+    </div>
+
+    <figure class="twin glass" style="margin:0" aria-label="Simulation of a day of solar tracking">
+      <header><span>Digital twin · single-axis tracking</span><span class="live"><i></i>Replay</span></header>
+      <div class="stage"><canvas id="twin" role="img" aria-label="Solar trackers rotating to follow the sun through the day, with the power curve"></canvas></div>
+      <div class="readouts">
+        <div class="ro"><span>Time</span><b id="r-time">13:00</b></div>
+        <div class="ro"><span>POA</span><b><span id="r-poa">980</span><small>W/m²</small></b></div>
+        <div class="ro"><span>Power</span><b><span id="r-mw">94.7</span><small>MW</small></b></div>
+        <div class="ro"><span>Rotation</span><b><span id="r-tilt">+4</span><small>°</small></b></div>
+      </div>
+      <figcaption class="note">Illustrative simulation of a demo plant. In HeliOS every value comes from real SCADA data, every 5 minutes.</figcaption>
+    </figure>
+  </header>
+
+  <!-- FACTS -->
+  <div class="wrap">
+    <div class="facts glass">
+      <div class="fact"><strong>5<em>min</em></strong><span>SCADA resolution in the replay</span></div>
+      <div class="fact"><strong>10<em>min</em></strong><span>Satellite cloud imagery over the plant</span></div>
+      <div class="fact"><strong>2<em>lang</em></strong><span>Ask Apollo in English or Spanish, by text or voice</span></div>
+      <div class="fact"><strong>1<em>app</em></strong><span>3D replay, CMMS, analysis and reports in one place</span></div>
+    </div>
+  </div>
+
+  <!-- TOUR: pantallas reales de HeliOS (nombre de la planta oculto) -->
+  <section id="tour" class="wrap">
+    <div class="head">
+      <span class="eyebrow">Product tour</span>
+      <h2>This is HeliOS.</h2>
+      <p class="lede">Real screens from HeliOS on a utility-scale plant: a full day replayed from SCADA, the work order board, Apollo's review and the analysis behind every loss.</p>
+    </div>
+    <div class="tour glass">
+      <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span class="url" id="tourUrl">HeliOS · Operations</span></div>
+      <div class="viewport" id="viewport">
+        <figure class="shot on" data-n="0"><video id="tourVideo" src="assets/app/ops-timelapse.mp4" poster="assets/app/ops.jpg" muted loop playsinline preload="metadata" aria-label="HeliOS replaying a full day of SCADA data, 07:00 to 18:30"></video></figure>
+        <figure class="shot" data-n="1"><video src="assets/app/ops-clouds.mp4" poster="assets/app/ops-clouds.jpg" muted playsinline preload="none" aria-label="Satellite clouds moving over the plant through the afternoon while the power recovers"></video></figure>
+        <figure class="shot" data-n="2"><img src="assets/app/works.jpg" alt="Works board with proposed, open and in-progress work orders and Apollo's review" loading="lazy"></figure>
+        <figure class="shot" data-n="3"><img src="assets/app/wo.jpg" alt="A work order proposed from an inverter alarm with its power curve" loading="lazy"></figure>
+        <figure class="shot" data-n="4"><img src="assets/app/analysis.jpg" alt="Analysis view of inverters, DC buses and trackers" loading="lazy"></figure>
+        <figure class="shot" data-n="5"><video src="assets/app/parts.mp4" poster="assets/app/parts.jpg" muted playsinline preload="none" aria-label="3D exploded tracker: it rotates, opens and highlights the parts of each repair job with their stock"></video></figure>
+      </div>
+      <div class="chapters" role="tablist" aria-label="Tour chapters">
+        <button class="chap" type="button" role="tab" data-n="0" data-url="Operations"><b>A day on site</b>07:00 to 18:30 from real SCADA data.<span class="bar"></span></button>
+        <button class="chap" type="button" role="tab" data-n="1" data-url="Operations · Clouds"><b>Clouds</b>Satellite clouds moving over every block.<span class="bar"></span></button>
+        <button class="chap" type="button" role="tab" data-n="2" data-url="Works"><b>Works</b>Apollo reviews every proposal in one go.<span class="bar"></span></button>
+        <button class="chap" type="button" role="tab" data-n="3" data-url="Works · WO‑0003"><b>Work order</b>Alarm, curve and energy lost, ready to create.<span class="bar"></span></button>
+        <button class="chap" type="button" role="tab" data-n="4" data-url="Analysis"><b>Analysis</b>Inverters, DC buses and trackers.<span class="bar"></span></button>
+        <button class="chap" type="button" role="tab" data-n="5" data-url="Works · Parts & warranty"><b>Parts</b>Exploded tracker, parts per repair and stock.<span class="bar"></span></button>
+      </div>
+      <p class="note">Real screens from HeliOS.</p>
+    </div>
+  </section>
+
+  <!-- CAMPO: texto arriba; dashboard completo y el teléfono al lado -->
+  <section id="field" class="wrap field">
+    <div class="head">
+      <span class="eyebrow">In the field</span>
+      <h2>The control room on the desk. The work order in your pocket.</h2>
+      <p class="lede">Technicians open HeliOS on their phone over the plant network. Same data and same work orders as the office, laid out for one hand and bright sun.</p>
+    </div>
+    <div class="devices" aria-label="HeliOS on a desktop and on an iPhone">
+      <div class="desk glass"><img src="assets/app/ops.jpg" alt="HeliOS operations dashboard on a desktop" loading="lazy"></div>
+      <div class="iphone">
+        <div class="island"></div>
+        <div class="phone-screen">
+          <img class="ph on" src="assets/app/m-works.jpg" alt="HeliOS Works board on an iPhone" loading="lazy">
+          <img class="ph" src="assets/app/m-wo.jpg" alt="A work order on an iPhone" loading="lazy">
+          <img class="ph" src="assets/app/m-ops.jpg" alt="The plant map on an iPhone" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <figure class="photo glass field-hero"><img src="assets/photos/technician-app.jpg" alt="A technician at a solar farm holding up a phone showing the HeliOS Works board" loading="lazy"></figure>
+    <ul class="points field-points">
+      <li><span class="dot">1</span><div><b>See the day's jobs</b><span>Assigned work orders, priority and where each one is on the map.</span></div></li>
+      <li><span class="dot">2</span><div><b>Close it by voice</b><span>Tell Apollo what you found and which parts you used. It fills in the work order and waits for your OK.</span></div></li>
+      <li><span class="dot">3</span><div><b>Back in the office, it's done</b><span>Stock, warranty claim and PDF record update as soon as the technician confirms.</span></div></li>
+    </ul>
+  </section>
+
+  <!-- IA en cada paso -->
+  <section id="ai" class="wrap">
+    <div class="head">
+      <span class="eyebrow">AI in every step</span>
+      <h2>Apollo does the paperwork. Your team does the work.</h2>
+      <p class="lede">Apollo reads the same data as your team: SCADA, weather, satellite, alarms, work orders and stock. It proposes, explains why, and waits for a person to decide.</p>
+    </div>
+    <div class="ai-grid">
+      <article class="ai-card glass">
+        <img class="crop" src="assets/app/ai-analysis.jpg" alt="Work order chart showing an inverter stop and the energy not produced" loading="lazy">
+        <span class="tag">Analysis</span>
+        <h3>Finds the loss and puts a number on it</h3>
+        <ul><li>Detects stopped inverters, weak DC buses and trackers off setpoint</li><li>Estimates the energy not produced for each incident</li><li>Answers questions about any hour of the day, with figures</li></ul>
+      </article>
+      <article class="ai-card glass">
+        <img class="crop" src="assets/app/ai-workorders.jpg" alt="Apollo's review of 80 work order proposals" loading="lazy">
+        <span class="tag">Work orders</span>
+        <h3>From alarm to assigned work order</h3>
+        <ul><li>Proposes a work order for each relevant alarm</li><li>Learns from your team: after 5 decisions on an alarm type it can create or discard on its own, only if you turn that on</li><li>Assigns each morning by skill, area and workload</li></ul>
+      </article>
+      <article class="ai-card glass">
+        <img class="crop" src="assets/app/ai-inventory.jpg" alt="Inventory with stock and minimum for each part" loading="lazy">
+        <span class="tag">Inventory &amp; purchasing</span>
+        <h3>Stock that keeps itself up to date</h3>
+        <ul><li>Parts used on a work order come off stock as the technician confirms</li><li>Minimum stock and supplier for every part</li><li>Low stock and jobs waiting for parts tell purchasing what to reorder</li></ul>
+      </article>
+      <article class="ai-card glass">
+        <img class="crop" src="assets/app/ai-warranty.jpg" alt="Spare parts with their warranty period" loading="lazy">
+        <span class="tag">Warranties</span>
+        <h3>No warranty claim left behind</h3>
+        <ul><li>The removed part is flagged for a claim from the work order itself</li><li>Serial number, supplier and status kept with the job</li><li>Warranty period recorded for every spare part</li></ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- SECURITY -->
+  <section id="security" class="wrap">
+    <div class="head">
+      <span class="eyebrow">Security</span>
+      <h2>HeliOS reads your plant data. It cannot control your SCADA.</h2>
+      <p class="lede">HeliOS runs on a PC at the plant or on a laptop off site, with the app, the database and the SCADA processing on that machine. It connects to your data APIs and has no control privileges over the SCADA. Apart from that data connection, only a few features, such as Apollo's AI model and backups, use the internet.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="wrap">
+    <div class="contact glass">
+      <div class="halo" aria-hidden="true"></div>
+      <div class="contact-copy">
+        <span class="eyebrow">Demo</span>
+        <h2>See your plant in HeliOS.</h2>
+        <p class="lede">Tell us which plant you operate. We'll run the demo on a day of your own SCADA data, so you see your trackers, your alarms and your losses.</p>
+        <p style="color:var(--mist)">HeliOS was built and tested on real SCADA data from a utility-scale solar farm.</p>
+        <div class="contact-list">
+          <div><span>Email</span><b>hello@solarai.com.au</b></div>
+          <div><span>Web</span><b>solarai.com.au</b></div>
+        </div>
+      </div>
+      <!-- Requests go to hello@solarai.com.au via FormSubmit (the first one triggers an activation email) -->
+      <form id="demo" novalidate data-endpoint="https://formsubmit.co/ajax/hello@solarai.com.au">
+        <input type="hidden" name="_subject" value="New HeliOS demo request">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+        <div class="row">
+          <label for="f-name">Name<input id="f-name" name="name" autocomplete="name" required></label>
+          <label for="f-company">Company<input id="f-company" name="company" autocomplete="organization" required></label>
+        </div>
+        <label for="f-email">Work email<input id="f-email" name="email" type="email" autocomplete="email" required></label>
+        <input type="hidden" name="interest" value="HeliOS platform">
+        <div class="row">
+          <label for="f-size">Plant capacity
+            <select id="f-size" name="capacity">
+              <option>Under 50 MW</option><option selected>50–150 MW</option><option>150–300 MW</option><option>Over 300 MW</option><option>Portfolio of plants</option>
+            </select></label>
+          <label for="f-role">Your role
+            <select id="f-role" name="role">
+              <option>Site manager</option><option>O&amp;M</option><option>Asset management</option><option>Engineering</option><option>Other</option>
+            </select></label>
+        </div>
+        <label for="f-msg">What would you like to see?<textarea id="f-msg" name="message" placeholder="For example: tracker alarms and vegetation control"></textarea></label>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+          <button class="btn solar" type="submit">Book a demo</button>
+          <span class="form-msg" id="f-out" role="status" aria-live="polite"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="bar">
+    <a class="brand" href="./"><svg width="26" height="26" aria-hidden="true"><use href="#logo"/></svg><span>HeliOS<small>by SolarAI Analytics</small></span></a>
+    <span>© 2026 SolarAI Analytics. HeliOS is a product of SolarAI Analytics.</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Reflejo del cristal: sigue al puntero (solo con ratón) */
+  document.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse') return;
+    const g = e.target.closest && e.target.closest('.glass');
+    if (!g) return;
+    const r = g.getBoundingClientRect();
+    g.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    g.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  }, { passive: true });
+
+  /* ---------- Gemelo digital: seguidores a un eje que siguen al sol ---------- */
+  const cv = document.getElementById('twin');
+  const ctx = cv.getContext('2d');
+  const out = { t: document.getElementById('r-time'), poa: document.getElementById('r-poa'), mw: document.getElementById('r-mw'), tilt: document.getElementById('r-tilt') };
+  const DAY0 = 6 * 60, DAY1 = 19.5 * 60, LOOP_MS = 26000; // amanecer–anochecer, un día cada 26 s
+  const LIMIT = 60, BACKTRACK = 22;                         // límite de giro (°) y altura bajo la que retrocede
+  const nf = new Intl.NumberFormat('en-AU', { maximumFractionDigits: 1, minimumFractionDigits: 1 });
+  let W = 0, H = 0, dpr = 1, curve = [];
+
+  function size() {
+    const r = cv.getBoundingClientRect();
+    if (!r.width) return;
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = r.width; H = r.height;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  // Sol en el plano este-oeste: f = 0 amanecer, 1 anochecer. Vista desde el sur: el este queda a la derecha.
+  function sunAt(min) {
+    const f = Math.min(1, Math.max(0, (min - DAY0) / (DAY1 - DAY0)));
+    const elev = Math.sin(f * Math.PI) * 64;              // altura máxima ~64°
+    return { f, elev };
+  }
+  function trackerAngle(s) {
+    // Ángulo del sol en el plano E-O medido desde el cenit; el seguidor lo iguala hasta el límite
+    const f = s.f, ang = (0.5 - f) * 180;                 // +90 al amanecer (este) … -90 al anochecer
+    let rot = Math.max(-LIMIT, Math.min(LIMIT, ang));
+    if (s.elev < BACKTRACK) rot *= Math.max(0, s.elev / BACKTRACK); // retroceso para no sombrear la fila de al lado
+    return rot;
+  }
+  function poaAt(s, rot) {
+    if (s.elev <= 0) return 0;
+    const ghi = 1050 * Math.pow(Math.sin(s.elev * Math.PI / 180), 1.15);
+    const ang = (0.5 - s.f) * 180;
+    const inc = Math.cos((ang - rot) * Math.PI / 180);      // incidencia sobre el módulo
+    return Math.max(0, ghi * (0.82 + 0.25 * inc));
+  }
+
+  function draw(min) {
+    if (!W) return;
+    const s = sunAt(min), rot = trackerAngle(s), poa = poaAt(s, rot);
+    const mw = Math.min(100, poa / 1000 * 118 * 0.86);       // planta ficticia: 118 MWp DC, recorte a 100 MWac
+    ctx.clearRect(0, 0, W, H);
+
+    // Cielo según la altura del sol
+    const k = Math.min(1, s.elev / 40);
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, `rgba(${20 + 40 * k},${34 + 70 * k},${70 + 90 * k},${0.55 + 0.25 * k})`);
+    sky.addColorStop(0.62, `rgba(${255 * (1 - k) * .6 + 40 * k},${120 * (1 - k) + 90 * k},${60 + 100 * k},0.35)`);
+    sky.addColorStop(1, 'rgba(4,6,13,0.2)');
+    ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+
+    // Arco del sol y sol
+    const hz = H * 0.62, cx = W / 2, rx = W * 0.44, ry = hz * 0.86;
+    ctx.setLineDash([2, 6]); ctx.strokeStyle = 'rgba(255,226,168,0.28)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.ellipse(cx, hz, rx, ry, 0, Math.PI, 2 * Math.PI); ctx.stroke(); ctx.setLineDash([]);
+    const th = Math.PI * s.f;                               // 0 a la derecha (este), π a la izquierda
+    const sx = cx + rx * Math.cos(th), sy = hz - ry * Math.sin(th) * (s.elev / 64);
+    const glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, 70);
+    glow.addColorStop(0, 'rgba(255,214,140,0.9)'); glow.addColorStop(.25, 'rgba(255,170,70,0.35)'); glow.addColorStop(1, 'rgba(255,122,61,0)');
+    ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(sx, sy, 70, 0, 7); ctx.fill();
+    ctx.fillStyle = '#ffd38a'; ctx.beginPath(); ctx.arc(sx, sy, 9, 0, 7); ctx.fill();
+    ctx.font = '500 10px "JetBrains Mono", monospace'; ctx.fillStyle = 'rgba(154,166,187,0.9)';
+    ctx.textAlign = 'right'; ctx.fillText('E', W - 10, hz - 6); ctx.textAlign = 'left'; ctx.fillText('W', 10, hz - 6);
+
+    // Suelo
+    const gr = ctx.createLinearGradient(0, hz, 0, H);
+    gr.addColorStop(0, 'rgba(18,26,40,0.9)'); gr.addColorStop(1, 'rgba(6,9,16,0.95)');
+    ctx.fillStyle = gr; ctx.fillRect(0, hz, W, H - hz);
+
+    // Filas de seguidores en perspectiva (de la más lejana a la más cercana)
+    const rows = 5, perRow = 16, r = rot * Math.PI / 180;
+    for (let i = 0; i < rows; i++) {
+      const d = i / (rows - 1);                             // 0 lejos … 1 cerca
+      const y = hz + 14 + d * d * (H - hz - 30);
+      const sc = 0.45 + d * 0.75, span = W * (0.62 + d * 0.5), half = 13 * sc;
+      for (let j = 0; j < perRow; j++) {
+        const x = cx - span / 2 + (j + 0.5) * span / perRow;
+        const dx = Math.cos(r) * half, dy = Math.sin(r) * half;
+        // poste
+        ctx.strokeStyle = 'rgba(160,175,200,0.35)'; ctx.lineWidth = 1 * sc;
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + 9 * sc); ctx.stroke();
+        // módulo: cara iluminada en ámbar según la incidencia
+        const lit = s.elev > 0 ? 0.35 + 0.65 * (poa / 1100) : 0.1;
+        ctx.strokeStyle = `rgba(${Math.round(95 + 160 * lit)},${Math.round(211 - 30 * lit)},${Math.round(230 - 160 * lit)},${0.55 + 0.4 * d})`;
+        ctx.lineWidth = 3.2 * sc; ctx.lineCap = 'round';
+        ctx.beginPath(); ctx.moveTo(x - dx, y - dy); ctx.lineTo(x + dx, y + dy); ctx.stroke(); // borde hacia el sol más bajo: el módulo mira al sol
+      }
+    }
+
+    // Curva de potencia del día hasta la hora actual
+    const px = 12, pw = W - 24, pb = H - 10, ph = H * 0.16;
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(px, pb); ctx.lineTo(px + pw, pb); ctx.stroke();
+    const pts = curve.filter(p => p[0] <= min);
+    if (pts.length > 1) {
+      const X = m => px + (m - DAY0) / (DAY1 - DAY0) * pw, Y = v => pb - v / 100 * ph;
+      const area = ctx.createLinearGradient(0, pb - ph, 0, pb);
+      area.addColorStop(0, 'rgba(255,181,71,0.35)'); area.addColorStop(1, 'rgba(255,181,71,0)');
+      ctx.beginPath(); ctx.moveTo(X(pts[0][0]), pb);
+      pts.forEach(p => ctx.lineTo(X(p[0]), Y(p[1])));
+      ctx.lineTo(X(pts[pts.length - 1][0]), pb); ctx.closePath(); ctx.fillStyle = area; ctx.fill();
+      ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(X(p[0]), Y(p[1])) : ctx.moveTo(X(p[0]), Y(p[1])));
+      ctx.strokeStyle = '#ffb547'; ctx.lineWidth = 1.6; ctx.stroke();
+      const last = pts[pts.length - 1];
+      ctx.fillStyle = '#ffe2a8'; ctx.beginPath(); ctx.arc(X(last[0]), Y(last[1]), 3, 0, 7); ctx.fill();
+    }
+
+    // Lecturas
+    const hh = String(Math.floor(min / 60)).padStart(2, '0'), mm = String(Math.floor(min % 60)).padStart(2, '0');
+    out.t.textContent = `${hh}:${mm}`;
+    out.poa.textContent = Math.round(poa).toLocaleString('en-AU');
+    out.mw.textContent = nf.format(mw);
+    out.tilt.textContent = (rot >= 0 ? '+' : '−') + Math.abs(Math.round(rot));
+  }
+
+  // Curva precalculada cada 5 minutos, como el SCADA
+  for (let m = DAY0; m <= DAY1; m += 5) {
+    const s = sunAt(m), r = trackerAngle(s);
+    curve.push([m, Math.min(100, poaAt(s, r) / 1000 * 118 * 0.86)]);
+  }
+
+  size();
+  new ResizeObserver(() => { size(); if (reduce) draw(13 * 60); }).observe(cv);
+
+  if (reduce) { draw(13 * 60); return; }
+  let start = performance.now(), visible = true;
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(cv);
+  (function loop(now) {
+    if (visible) {
+      const f = ((now - start) % LOOP_MS) / LOOP_MS;
+      draw(DAY0 + f * (DAY1 - DAY0));
+    }
+    requestAnimationFrame(loop);
+  })(start);
+})();
+
+/* ---------- Tour: pantallas reales; el vídeo dura un día de operación, cada captura 7 s ---------- */
+(() => {
+  const vp = document.getElementById('viewport');
+  if (!vp) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const shots = [...vp.querySelectorAll('.shot')], chaps = [...document.querySelectorAll('.chap')];
+  const url = document.getElementById('tourUrl'), vids = shots.map(s => s.querySelector('video'));
+  const IMG_MS = 7000;
+  let cur = 0, t0 = performance.now(), visible = false, hiddenAt = 0;
+  const dur = () => { const v = vids[cur]; return v && isFinite(v.duration) && v.duration > 0 ? v.duration * 1000 : IMG_MS; };
+  const playCur = () => vids.forEach((v, i) => { if (!v) return; if (i === cur && !reduce && visible) { if (v.preload === 'none') v.preload = 'auto'; v.play().catch(() => {}); } else v.pause(); });
+  function go(n) {
+    cur = (n + shots.length) % shots.length; t0 = performance.now();
+    shots.forEach((s, i) => s.classList.toggle('on', i === cur));
+    chaps.forEach((b, i) => { b.classList.toggle('on', i === cur); b.setAttribute('aria-selected', i === cur); b.style.setProperty('--p', 0); });
+    url.textContent = 'HeliOS · ' + chaps[cur].dataset.url;
+    const v = vids[cur]; if (v) { try { v.currentTime = 0; } catch (e) { /* aún sin cargar */ } }
+    playCur();
+  }
+  chaps.forEach(b => b.addEventListener('click', () => go(+b.dataset.n)));
+  new IntersectionObserver(es => {
+    const v = es[0].isIntersecting;
+    if (v && !visible && hiddenAt) t0 += performance.now() - hiddenAt;
+    if (!v) hiddenAt = performance.now();
+    visible = v;
+    playCur();
+  }).observe(vp);
+  go(0);
+  if (reduce) return;   // sin animación: el visitante elige el capítulo
+  (function loop(now) {
+    if (visible) {
+      const e = (now - t0) / dur();
+      if (e >= 1) go(cur + 1); else chaps[cur].style.setProperty('--p', e);
+    }
+    requestAnimationFrame(loop);
+  })(performance.now());
+
+  /* iPhone: tres pantallas que se alternan cada 3,5 s */
+  const phs = [...document.querySelectorAll('.phone-screen .ph')];
+  if (phs.length > 1) { let k = 0; setInterval(() => { phs[k].classList.remove('on'); k = (k + 1) % phs.length; phs[k].classList.add('on'); }, 3500); }
+})();
+
+/* ---------- Ver en grande: clic en el dashboard, el teléfono o una pantalla del tour ---------- */
+(() => {
+  const box = document.createElement('div'); box.className = 'lightbox'; box.hidden = true; box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-label', 'Full-size screen');
+  box.innerHTML = '<button class="lb-x" type="button" aria-label="Close">✕</button><div class="lb-in"></div>';
+  document.body.append(box);
+  const inner = box.querySelector('.lb-in');
+  const close = () => { box.hidden = true; inner.textContent = ''; document.documentElement.style.overflow = ''; };
+  const open = (src, alt, tall, isVideo) => {
+    inner.textContent = ''; inner.className = 'lb-in' + (tall ? ' tall' : '');
+    const el = document.createElement(isVideo ? 'video' : 'img'); el.src = src;
+    if (isVideo) { el.muted = true; el.loop = true; el.playsInline = true; el.controls = true; el.autoplay = true; } else el.alt = alt || '';
+    inner.append(el); box.hidden = false; document.documentElement.style.overflow = 'hidden'; box.querySelector('.lb-x').focus();
+  };
+  box.addEventListener('click', e => { if (e.target === box || e.target.closest('.lb-x')) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !box.hidden) close(); });
+  document.querySelector('.desk img').addEventListener('click', e => open(e.currentTarget.src, e.currentTarget.alt));
+  document.querySelector('.phone-screen').addEventListener('click', () => { const im = document.querySelector('.phone-screen .ph.on'); open(im.src, im.alt, true); });
+  document.getElementById('viewport').addEventListener('click', () => { const s = document.querySelector('.shot.on'); const v = s.querySelector('video'), im = s.querySelector('img'); open(v ? v.currentSrc || v.src : im.src, im && im.alt, false, !!v); });
+  document.querySelectorAll('.desk img, .phone-screen, #viewport').forEach(el => { el.style.cursor = 'zoom-in'; el.title = 'Click to view full size'; });
+})();
+
+/* ---------- Mapa ilustrativo del servicio de análisis: 8 × 5 bloques con su desviación ----------
+   Patrón fijo (no aleatorio) para que el dibujo sea siempre el mismo. */
+(() => {
+  const g = document.getElementById('svcBlocks');
+  if (!g) return;
+  const NS = 'http://www.w3.org/2000/svg', COLS = 8, ROWS = 5, X0 = 14, Y0 = 14, BW = 34, BH = 34, GAP = 4;
+  // 0 = esperado, 1 = −2 a −5 %, 2 = bajo −5 %
+  const dev = [
+    0,0,0,1,0,0,0,0,
+    0,0,0,0,0,0,2,0,
+    0,1,0,0,0,0,1,0,
+    0,0,0,0,2,0,0,0,
+    0,0,0,0,0,0,0,1
+  ];
+  const fill = ['rgba(134,226,154,.30)', 'rgba(255,181,71,.55)', 'rgba(255,122,61,.75)'];
+  const flags = { 14: 'Strings out', 28: 'Trackers' };   // bloques con causa identificada
+  dev.forEach((d, i) => {
+    const x = X0 + (i % COLS) * (BW + GAP), y = Y0 + Math.floor(i / COLS) * (BH + GAP);
+    const r = document.createElementNS(NS, 'rect');
+    Object.entries({ x, y, width: BW, height: BH, rx: 5, fill: fill[d], stroke: 'rgba(255,255,255,.12)' }).forEach(([k, v]) => r.setAttribute(k, v));
+    g.append(r);
+    if (flags[i]) {
+      const t = document.createElementNS(NS, 'text');
+      Object.entries({ x: x + BW / 2, y: y - 3, 'text-anchor': 'middle', 'font-family': 'JetBrains Mono, monospace', 'font-size': 8, fill: '#ffe2a8', stroke: '#04060d', 'stroke-width': 3, 'paint-order': 'stroke' }).forEach(([k, v]) => t.setAttribute(k, v));
+      t.textContent = flags[i];
+      g.append(t);
+    }
+  });
+})();
+
+/* ---------- Formulario de demo ----------
+   Pon la URL de tu servicio de formularios en data-endpoint (p. ej. Formspree o tu propio backend).
+   Sin endpoint, el formulario valida y avisa de que aún no está conectado; no finge un envío. */
+(() => {
+  const form = document.getElementById('demo'), msg = document.getElementById('f-out');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    msg.className = 'form-msg';
+    const bad = [...form.querySelectorAll('[required]')].find(el => !el.value.trim() || !el.checkValidity());
+    if (bad) { msg.classList.add('warn'); msg.textContent = bad.type === 'email' ? 'Check the email address: it needs an @ and a domain.' : `Missing: ${bad.closest('label').firstChild.textContent.trim()}.`; bad.focus(); return; }
+    const endpoint = form.dataset.endpoint;
+    if (!endpoint) { msg.classList.add('warn'); msg.textContent = 'This form is not connected to an inbox yet.'; return; }
+    const btn = form.querySelector('button[type=submit]');
+    btn.disabled = true; msg.textContent = 'Sending…';
+    try {
+      const r = await fetch(endpoint, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) });
+      const data = await r.json().catch(() => ({}));
+      // FormSubmit responde 200 con success "false" si algo falla (p. ej. buzón sin activar)
+      if (!r.ok || String(data.success) === 'false') throw new Error(data.message || r.status);
+      form.reset(); msg.textContent = 'Thanks. We will reply within 2 business days.';
+    } catch {
+      msg.classList.add('warn');
+      msg.textContent = 'Could not send. Try again or email hello@solarai.com.au.';
+    } finally { btn.disabled = false; }
+  });
+})();
+</script>
+</body>
+</html>
